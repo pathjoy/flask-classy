@@ -240,7 +240,7 @@ class FlaskView(object):
         if hasattr(cls, 'base_args'):
             ignored_rule_args += cls.base_args
 
-        if method:
+        if method and getattr(cls, 'inspect_args', True):
             args = get_true_argspec(method)[0]
             for arg in args:
                 if arg not in ignored_rule_args:
