@@ -131,11 +131,12 @@ class FlaskView(object):
                     app.add_url_rule(rule, route_name, proxy, methods=methods, subdomain=subdomain)
 
                 else:
+                    methods = getattr(cls, 'default_methods', ["GET"])
                     route_str = '/%s/' % name
                     if not cls.trailing_slash:
                         route_str = route_str.rstrip('/')
                     rule = cls.build_rule(route_str, value)
-                    app.add_url_rule(rule, route_name, proxy, subdomain=subdomain)
+                    app.add_url_rule(rule, route_name, proxy, methods=methods, subdomain=subdomain)
             except DecoratorCompatibilityError:
                 raise DecoratorCompatibilityError("Incompatible decorator detected on %s in class %s" % (name, cls.__name__))
 
